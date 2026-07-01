@@ -1,0 +1,17 @@
+# Netlify build configuration for the Vite app.
+# Without this, Netlify publishes the repo root (which has no index.html) and
+# every route 404s. Point it at the Vite build output instead.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Single-page app fallback: serve index.html for any path that doesn't match a
+# built file, so refreshes / deep links never 404. Real assets are served
+# directly (Netlify matches files before applying this rule).
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
