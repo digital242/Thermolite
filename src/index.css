@@ -46,6 +46,52 @@ h4,
   color: transparent;
 }
 
+/* ---- Brand wordmark (Logo component) ------------------------------------- */
+.logo {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+.logo-wordmark {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--color-bone-100);
+}
+/* The orange square that stands in for the letter "O" */
+.logo-o {
+  box-sizing: border-box;
+  display: inline-block;
+  width: 0.8em;
+  height: 0.8em;
+  margin: 0 0.06em;
+  border: 0.14em solid var(--color-ember-500);
+  border-radius: 0.12em;
+  position: relative;
+  transform: translateY(0.02em);
+}
+.logo-o::after {
+  content: '';
+  position: absolute;
+  inset: 0.14em;
+  background: var(--color-ember-500);
+  border-radius: 0.04em;
+}
+.logo-tagline {
+  margin-top: 0.42em;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.3em;
+  letter-spacing: 0.34em;
+  text-indent: 0.34em;
+  color: rgba(245, 245, 240, 0.72);
+}
+
 /* Thin engineered grid used behind static-fallback / content blocks */
 .blueprint-grid {
   background-image:

@@ -10,6 +10,7 @@ import {
   SOCIALS,
 } from '../data/site'
 import CountUp from './CountUp'
+import Logo from './Logo'
 import { ProfileIcon, AppIcon, CertIcon } from './Icons'
 
 // A section shell: full-viewport so the fixed canvas reads as "pinned" behind
@@ -43,8 +44,8 @@ export default function Sections({ go, reduced }) {
           <p className="reveal mb-4 text-sm font-medium uppercase tracking-[0.4em] text-bone-100/60">
             {BRAND.range}
           </p>
-          <h1 className="reveal font-display font-bold leading-none text-[clamp(2.5rem,12vw,8rem)]">
-            <span className="wordmark-split">THERMOLITE</span>
+          <h1 className="reveal flex justify-center">
+            <Logo className="text-[clamp(2.5rem,11vw,7.5rem)]" />
           </h1>
           <p className="reveal mx-auto mt-6 max-w-xl text-lg text-bone-100/80 sm:text-2xl">
             {BRAND.tagline}
@@ -284,10 +285,8 @@ export default function Sections({ go, reduced }) {
       <footer className="relative z-10 border-t border-navy-800 bg-navy-950/90 px-5 py-14 backdrop-blur-sm sm:px-8">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-3">
           <div>
-            <p className="font-display text-2xl font-bold">
-              THERMO<span className="text-ember-500">LITE</span>
-            </p>
-            <p className="mt-3 max-w-xs text-sm text-bone-100/60">
+            <Logo className="text-2xl" tagline />
+            <p className="mt-4 max-w-xs text-sm text-bone-100/60">
               GRP/FRP molded gratings by Thermodrain — corrosion-proof surfaces engineered for
               every load, from catwalk to carriageway.
             </p>

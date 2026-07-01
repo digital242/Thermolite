@@ -1,4 +1,5 @@
 import { NAV_ITEMS } from '../data/site'
+import Logo from './Logo'
 
 // Sticky/floating nav above the canvas. Active tab gets the ember highlight;
 // clicking scrolls (smoothly, via the handler passed from App) rather than
@@ -7,11 +8,8 @@ export default function Nav({ activeId, onNavigate }) {
   return (
     <header className="fixed inset-x-0 top-0 z-50">
       <nav className="mx-auto mt-3 flex max-w-6xl items-center justify-between rounded-full border border-navy-700/50 bg-navy-950/70 px-4 py-2.5 backdrop-blur-md sm:px-6">
-        <button
-          onClick={() => onNavigate('hero')}
-          className="font-display text-base font-bold tracking-tight text-bone-100 sm:text-lg"
-        >
-          THERMO<span className="text-ember-500">LITE</span>
+        <button onClick={() => onNavigate('hero')} aria-label="Go to top">
+          <Logo className="text-base sm:text-xl" />
         </button>
 
         <ul className="hidden items-center gap-1 lg:flex">
