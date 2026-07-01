@@ -9,16 +9,8 @@ import { NAV_ITEMS, SECTION_SHAPES } from './data/site'
 
 // The canvas layer is code-split so the animation engine loads lazily behind
 // the branded loader; the DOM content is always available immediately.
+// ParticleField self-detects the device tier (particle count / FPS / DPR).
 const ParticleField = lazy(() => import('./components/ParticleField'))
-
-// Rough capability gate for the particle budget passed to the canvas.
-function detectQuality() {
-  const cores = navigator.hardwareConcurrency || 4
-  const mem = navigator.deviceMemory || 4
-  if (cores <= 2 || mem <= 2) return 0.55
-  if (window.innerWidth < 768) return 0.75
-  return 1
-}
 
 export default function App() {
   const reducedMotion = usePrefersReducedMotion()
@@ -126,7 +118,7 @@ export default function App() {
         }}
       />
       <Suspense fallback={null}>
-        <ParticleField quality={detectQuality()} />
+        <ParticleField />
       </Suspense>
       <Nav activeId={activeId} onNavigate={go} />
       <Sections go={go} reduced={false} />
