@@ -14,18 +14,21 @@ import { morphState } from '../lib/morphStore'
 //   • an adaptive governor trims particles if real frames come in slow.
 
 // Device tiers: [particles, fps cap, max DPR, glow footprint ×, particle floor]
+// Tuned for low load — the dominant cost is overdraw from additive glow
+// sprites, so particle count and glow size are kept deliberately small.
 const TIERS = {
-  low: { count: 240, fps: 30, dpr: 1, glow: 4.4, floor: 110 },
-  mid: { count: 520, fps: 45, dpr: 1.5, glow: 5.2, floor: 200 },
-  high: { count: 820, fps: 60, dpr: 2, glow: 6, floor: 320 },
+  low: { count: 120, fps: 30, dpr: 1, glow: 3.2, floor: 60 },
+  mid: { count: 260, fps: 40, dpr: 1.35, glow: 3.8, floor: 120 },
+  high: { count: 460, fps: 60, dpr: 1.6, glow: 4.4, floor: 180 },
 }
 
 function detectTier() {
   const cores = navigator.hardwareConcurrency || 4
   const mem = navigator.deviceMemory || 4
   const coarse = typeof matchMedia === 'function' && matchMedia('(pointer: coarse)').matches
-  if (cores <= 4 || mem <= 4) return 'low'
-  if (coarse || cores <= 8 || window.innerWidth < 1024) return 'mid'
+  // Bias toward the lighter tiers: touch/small screens and modest CPUs -> low.
+  if (coarse || cores <= 4 || mem <= 4 || window.innerWidth < 900) return 'low'
+  if (cores <= 8 || window.innerWidth < 1440) return 'mid'
   return 'high'
 }
 
@@ -132,10 +135,11 @@ export default function ParticleField({ quality = 1 }) {
       // ---- adaptive downscale: if frames run slow, quietly trim particles ---
       accum += dt
       frames++
-      if (now - sampleAt > 1000) {
+      if (now - sampleAt > 700) {
         const avg = accum / frames
-        if (avg > frameInterval * 1.5 && activeCount > tier.floor) {
-          activeCount = Math.max(tier.floor, Math.floor(activeCount * 0.85))
+        // If frames run slow, cut particle count hard and fast.
+        if (avg > frameInterval * 1.25 && activeCount > tier.floor) {
+          activeCount = Math.max(tier.floor, Math.floor(activeCount * 0.7))
         }
         accum = 0
         frames = 0
