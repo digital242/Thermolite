@@ -169,8 +169,8 @@ export default function Sections({ go, reduced }) {
         <Eyebrow>Configure Your Grating</Eyebrow>
         <h2 className="reveal text-4xl font-bold sm:text-5xl">Build it to your spec.</h2>
         <p className="reveal mb-8 mt-4 max-w-2xl text-bone-100/70">
-          Choose the mesh, bar depth, panel size and colour — the weight and load capacity update
-          instantly, then send the exact configuration straight to our team for a quote.
+          Set your exact panel dimensions, mesh, bar height and colour — the panel drawing, weight
+          and load capacity update instantly, then send the spec straight to our team for a quote.
         </p>
         <GratingConfigurator />
       </Section>
