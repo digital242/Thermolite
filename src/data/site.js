@@ -15,11 +15,13 @@ export const BRAND = {
 export const NAV_ITEMS = [
   { id: 'hero', label: 'Home' },
   { id: 'about', label: 'About' },
-  { id: 'specifications', label: 'Specifications' },
+  { id: 'specifications', label: 'Specs' },
   { id: 'variants', label: 'Profiles' },
-  { id: 'load', label: 'Load Testing' },
+  { id: 'customize', label: 'Configure' },
+  { id: 'load', label: 'Load' },
   { id: 'applications', label: 'Applications' },
-  { id: 'certifications', label: 'Certifications' },
+  { id: 'locations', label: 'Locations' },
+  { id: 'certifications', label: 'Certs' },
   { id: 'contact', label: 'Contact' },
 ]
 
@@ -30,8 +32,10 @@ export const SECTION_SHAPES = {
   about: 'grating',
   specifications: 'rib',
   variants: 'rib',
+  customize: 'grating',
   load: 'bars',
   applications: 'grid',
+  locations: 'grid',
   certifications: 'seal',
   contact: 'disperse',
 }
@@ -40,7 +44,7 @@ export const ABOUT = {
   eyebrow: 'Material Science',
   heading: 'Fiberglass that outlasts steel.',
   body: [
-    'Thermolite gratings are manufactured from glass-reinforced polymer (GRP/FRP) using a molded, cross-hatched matrix of continuous glass rovings encapsulated in a corrosion-resistant resin. The result is a walkway and drainage surface that will not rust, rot, or fatigue the way galvanised steel does.',
+    'Thermolite gratings are manufactured from glass-reinforced polymer (GRP/FRP) using a molded, cross-hatched matrix of continuous glass rovings bonded into a tough, corrosion-resistant polymer. The result is a walkway and drainage surface that will not rust, rot, or fatigue the way galvanised steel does.',
     'Every panel is engineered for a defined uniformly distributed load (UDL) and concentrated wheel load, giving specifying engineers a predictable safety factor for pedestrian, trolley and vehicular traffic — from a maintenance catwalk to an AASHTO H-25 rated access cover.',
   ],
   highlights: [
@@ -62,7 +66,62 @@ export const SPEC_TABLE = {
     { product: 'FRP Heavy Grating', mesh: '38 × 75 mm', depth: '25 mm', weight: '15.0', udl: '900' },
     { product: 'Mini Mesh Grating', mesh: '19 × 19 mm', depth: '25 mm', weight: '24.0', udl: '400' },
   ],
-  note: 'Values are nominal for standard isophthalic resin panels (1220 × 3660 mm / 1220 × 4000 mm). Vinyl-ester, phenolic (fire-retardant) and food-grade resins available to order. UDL figures quoted at a working span of 1.0 m with a safety factor of 3:1.',
+  note: 'Values are nominal for standard panels (1220 × 3660 mm and 1220 × 4000 mm). Custom panel sizes are cut to order. UDL figures are quoted at a working span of 1.0 m with a 3:1 safety factor.',
+}
+
+// ---- Grating configurator: build-your-own spec ---------------------------
+// Weight (Kg/sqm) & UDL (Kg/sqm) keyed by `${mesh}|${depth}`.
+export const CONFIG = {
+  meshes: [
+    { id: '38x38', label: '38 × 38 mm', note: 'Standard square walkway mesh', depths: ['25', '30', '38'] },
+    { id: '38x75', label: '38 × 75 mm', note: 'Wide heavy-traffic drainage mesh', depths: ['25', '38'] },
+    { id: '19x19', label: '19 × 19 mm', note: 'Fine heel-safe mini mesh', depths: ['25'] },
+  ],
+  specs: {
+    '38x38|25': { weight: 18.5, udl: 500 },
+    '38x38|30': { weight: 22.0, udl: 750 },
+    '38x38|38': { weight: 27.5, udl: 1200 },
+    '38x75|25': { weight: 15.0, udl: 900 },
+    '38x75|38': { weight: 21.0, udl: 1500 },
+    '19x19|25': { weight: 24.0, udl: 400 },
+  },
+  panels: [
+    { id: '1220x3660', label: '1220 × 3660 mm', area: 4.465 },
+    { id: '1220x4000', label: '1220 × 4000 mm', area: 4.88 },
+    { id: 'custom', label: 'Custom size', area: null },
+  ],
+  colors: ['Safety Orange', 'Yellow', 'Dark Grey', 'Green'],
+}
+
+// ---- Locations we serve --------------------------------------------------
+// NOTE: replace `groups` with the exact list from
+// https://www.frpmanholecover.com/popular-location.html (network policy
+// blocked automated fetch of that page).
+export const LOCATIONS = {
+  intro:
+    'Thermolite GRP/FRP gratings and Thermodrain covers are manufactured, supplied and installed across India — and exported worldwide. A selection of the locations we serve:',
+  groups: [
+    {
+      region: 'Maharashtra & West India',
+      cities: ['Mumbai', 'Navi Mumbai', 'Thane', 'Pune', 'Nashik', 'Nagpur', 'Aurangabad', 'Kolhapur', 'Ahmedabad', 'Surat', 'Vadodara', 'Rajkot', 'Goa'],
+    },
+    {
+      region: 'North India',
+      cities: ['Delhi', 'New Delhi', 'Noida', 'Ghaziabad', 'Gurugram', 'Faridabad', 'Jaipur', 'Jodhpur', 'Lucknow', 'Kanpur', 'Chandigarh', 'Ludhiana', 'Amritsar'],
+    },
+    {
+      region: 'South India',
+      cities: ['Bengaluru', 'Hyderabad', 'Chennai', 'Coimbatore', 'Kochi', 'Thiruvananthapuram', 'Visakhapatnam', 'Vijayawada', 'Mysuru', 'Mangaluru'],
+    },
+    {
+      region: 'East & Central India',
+      cities: ['Kolkata', 'Bhubaneswar', 'Patna', 'Ranchi', 'Guwahati', 'Raipur', 'Indore', 'Bhopal', 'Jabalpur', 'Gwalior'],
+    },
+    {
+      region: 'Export Markets',
+      cities: ['UAE / Dubai', 'Saudi Arabia', 'Qatar', 'Oman', 'Kuwait', 'Nepal', 'Sri Lanka', 'Bangladesh', 'Kenya', 'Nigeria'],
+    },
+  ],
 }
 
 export const VARIANTS = [

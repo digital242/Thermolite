@@ -6,11 +6,13 @@ import {
   LOAD_STEPS,
   APPLICATIONS,
   CERTIFICATIONS,
+  LOCATIONS,
   MAP_EMBED,
   SOCIALS,
 } from '../data/site'
 import CountUp from './CountUp'
 import Logo from './Logo'
+import GratingConfigurator from './GratingConfigurator'
 import { ProfileIcon, AppIcon, CertIcon } from './Icons'
 
 // A section shell: full-viewport so the fixed canvas reads as "pinned" behind
@@ -162,6 +164,17 @@ export default function Sections({ go, reduced }) {
         </div>
       </Section>
 
+      {/* ---- 4b. CONFIGURE / CUSTOMIZE --------------------------------- */}
+      <Section id="customize">
+        <Eyebrow>Configure Your Grating</Eyebrow>
+        <h2 className="reveal text-4xl font-bold sm:text-5xl">Build it to your spec.</h2>
+        <p className="reveal mb-8 mt-4 max-w-2xl text-bone-100/70">
+          Choose the mesh, bar depth, panel size and colour — the weight and load capacity update
+          instantly, then send the exact configuration straight to our team for a quote.
+        </p>
+        <GratingConfigurator />
+      </Section>
+
       {/* ---- 5. LOAD TESTING ------------------------------------------- */}
       <Section id="load">
         <Eyebrow>Load Testing / UDL Capacity</Eyebrow>
@@ -211,6 +224,37 @@ export default function Sections({ go, reduced }) {
         </div>
       </Section>
 
+      {/* ---- 6b. LOCATIONS WE SERVE ------------------------------------ */}
+      <Section id="locations">
+        <Eyebrow>Locations We Serve</Eyebrow>
+        <h2 className="reveal text-4xl font-bold sm:text-5xl">Delivered across India &amp; beyond.</h2>
+        <p className="reveal mt-4 max-w-3xl text-bone-100/70">{LOCATIONS.intro}</p>
+        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {LOCATIONS.groups.map((g) => (
+            <div
+              key={g.region}
+              className="reveal rounded-2xl border border-navy-700/50 bg-navy-900/40 p-6 backdrop-blur-sm"
+            >
+              <h3 className="font-display text-lg font-semibold text-ember-400">{g.region}</h3>
+              <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-1.5 text-sm text-bone-100/70">
+                {g.cities.map((c) => (
+                  <li key={c} className="after:ml-3 after:text-navy-600 after:content-['·'] last:after:hidden">
+                    {c}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <p className="reveal mt-6 text-sm text-bone-100/50">
+          Don’t see your city? We ship nationwide and export worldwide —{' '}
+          <a href={`tel:${BRAND.phoneHref}`} className="text-ember-400 hover:underline">
+            call {BRAND.phone}
+          </a>{' '}
+          to confirm delivery to your site.
+        </p>
+      </Section>
+
       {/* ---- 7. CERTIFICATIONS ----------------------------------------- */}
       <Section id="certifications" className="items-center text-center">
         <Eyebrow>Certifications</Eyebrow>
@@ -237,7 +281,7 @@ export default function Sections({ go, reduced }) {
               <Eyebrow>Contact</Eyebrow>
               <h2 className="text-4xl font-bold sm:text-5xl">Let’s spec your project.</h2>
               <p className="mt-4 max-w-md text-bone-100/70">
-                Talk to our engineering team for panel sizing, resin selection and load
+                Talk to our engineering team for panel sizing, profile selection and load
                 certification tailored to your site.
               </p>
               <div className="mt-8 space-y-4 text-lg">

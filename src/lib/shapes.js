@@ -35,29 +35,45 @@ function frame(w, h) {
   return { cx, cy, s }
 }
 
-// ---- State 1 & idle: single FRP grating panel (crosshatch mesh) ------------
+// ---- State 1 & idle: a single FRP molded grating panel ---------------------
+// A framed rectangular panel of square mesh cells — the signature look of an
+// actual Thermolite grating. A bold perimeter frame + internal square grid so
+// it still reads as "grating" even at low particle counts.
 function grating(w, h) {
   const { cx, cy, s } = frame(w, h)
   const pts = []
   const hw = s
   const hh = s * 0.66
-  const lines = 8
-  const density = 26
-  // slight isometric skew so the flat panel reads with depth
-  const skew = 0.26
-  for (let c = 0; c <= lines; c++) {
-    const gx = -hw + (2 * hw * c) / lines
-    for (let d = 0; d <= density; d++) {
-      const gy = -hh + (2 * hh * d) / density
-      pts.push({ x: cx + gx + gy * skew, y: cy + gy * 0.62, alpha: 1 })
-    }
+  const skew = 0.22 // slight isometric tilt for panel depth
+  const yScale = 0.66
+  const put = (gx, gy, alpha = 1) =>
+    pts.push({ x: cx + gx + gy * skew, y: cy + gy * yScale, alpha })
+
+  // Bold panel frame (perimeter) — makes it read as a discrete grating panel.
+  const perH = 60
+  const perV = 36
+  for (let i = 0; i <= perH; i++) {
+    const gx = -hw + (2 * hw * i) / perH
+    put(gx, -hh) // top edge
+    put(gx, hh) // bottom edge
   }
-  for (let r = 0; r <= lines; r++) {
-    const gy = -hh + (2 * hh * r) / lines
-    for (let d = 0; d <= density; d++) {
-      const gx = -hw + (2 * hw * d) / density
-      pts.push({ x: cx + gx + gy * skew, y: cy + gy * 0.62, alpha: 1 })
-    }
+  for (let i = 0; i <= perV; i++) {
+    const gy = -hh + (2 * hh * i) / perV
+    put(-hw, gy) // left edge
+    put(hw, gy) // right edge
+  }
+
+  // Internal square mesh: vertical + horizontal bars forming grating cells.
+  const cols = 10
+  const rows = 5
+  const dens = 18
+  for (let c = 1; c < cols; c++) {
+    const gx = -hw + (2 * hw * c) / cols
+    for (let d = 0; d <= dens; d++) put(gx, -hh + (2 * hh * d) / dens, 0.9)
+  }
+  for (let r = 1; r < rows; r++) {
+    const gy = -hh + (2 * hh * r) / rows
+    for (let d = 0; d <= dens; d++) put(-hw + (2 * hw * d) / dens, gy, 0.9)
   }
   return pts
 }
