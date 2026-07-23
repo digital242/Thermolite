@@ -15,3 +15,40 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+# ---------------------------------------------------------------------------
+# Security hardening headers (a "firewall" for a static site).
+# This is the practical protection layer for a site with no backend: it locks
+# down what the browser is allowed to load and run (Content-Security-Policy),
+# blocks clickjacking, forces HTTPS, and disables MIME sniffing. Netlify adds
+# HTTPS + edge DDoS protection on top of these.
+# ---------------------------------------------------------------------------
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Content-Security-Policy — only load code/styles/frames from trusted origins.
+    #  script-src 'self'          : only our own bundled JS (no inline/eval)
+    #  style-src  'unsafe-inline' : required for React style props + GSAP + Tailwind
+    #  fonts.googleapis / gstatic : Google Fonts stylesheet + font files
+    #  frame-src google           : the CBD Belapur Google Maps embed
+    Content-Security-Policy = "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self'; frame-src https://www.google.com https://maps.google.com; upgrade-insecure-requests"
+    # Force HTTPS for a year (Netlify serves valid TLS certs automatically).
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    # Block the page from being framed by other sites (clickjacking).
+    X-Frame-Options = "SAMEORIGIN"
+    # Stop the browser guessing content types (MIME-sniffing attacks).
+    X-Content-Type-Options = "nosniff"
+    # Don't leak full URLs to third parties.
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    # Deny access to sensitive device APIs the site never uses.
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+    # Isolate our browsing context from anything we open/embed.
+    Cross-Origin-Opener-Policy = "same-origin"
+    # Disable the legacy XSS auditor (CSP is the modern replacement).
+    X-XSS-Protection = "0"
+
+# Long-cache the fingerprinted build assets (safe: filenames change on rebuild).
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
